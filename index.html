@@ -9,7 +9,6 @@
       // Shim process.env for browser compatibility
       window.process = window.process || { env: { API_KEY: "" } };
       
-      // Global error listener to debug blank screen
       window.addEventListener('error', function(event) {
         const errorDisplay = document.getElementById('error-overlay');
         if (errorDisplay) {

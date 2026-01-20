@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { BusinessProfile, Employee, Role, ServiceItem, Customer, PaymentMethod, Transaction, InventoryItem, Unit } from '../types.ts';
-import { CheckCircle, Banknote, Smartphone, Split, Plus, Minus, ShoppingCart, Layers, ChevronLeft, ChevronRight, User, Trash2, Box, Edit2, Search, X, Image as ImageIcon, AlertTriangle, Package, History, Info } from 'lucide-react';
+import { CheckCircle, Banknote, Smartphone, Split, Plus, Minus, ShoppingCart, Layers, ChevronLeft, ChevronRight, User, Trash2, Box, Edit2, Search, X, Image as ImageIcon, AlertTriangle, Package, History, Clock } from 'lucide-react';
 
 export type ShopView = 'Services' | 'Inventory' | 'Catalog';
 
@@ -96,7 +96,6 @@ const ServicesWizard: React.FC<{ services: ServiceItem[], employees: Employee[],
 
       <div className="flex-1 overflow-y-auto p-4 md:p-12 custom-scrollbar">
         <div className="max-w-6xl mx-auto h-full">
-          
           {step === 1 && (
             <div className="space-y-6 md:space-y-12 animate-in fade-in slide-in-from-bottom-4">
                <div className="text-center"><h2 className="text-xl md:text-3xl font-black text-white uppercase tracking-tighter">Assign Specialists</h2></div>
@@ -105,27 +104,21 @@ const ServicesWizard: React.FC<{ services: ServiceItem[], employees: Employee[],
                  return (
                   <div key={role.id} className="space-y-4 md:space-y-6">
                       <div className="flex items-center gap-4 md:gap-6"><h3 className="text-[8px] md:text-xs font-black text-slate-500 uppercase tracking-widest">{role.name} Domain</h3><div className="h-px bg-white/5 flex-1"></div></div>
-                      {activeExperts.length > 0 ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-6">
-                          {activeExperts.map(emp => (
-                            <button key={emp.id} onClick={() => setSelectedStaff({...selectedStaff, [role.id]: emp.id})} className={`p-4 md:p-6 rounded-2xl md:rounded-[2.5rem] border-2 transition-all flex flex-col items-center gap-2 md:gap-4 ${selectedStaff[role.id] === emp.id ? 'border-emerald-500 bg-emerald-500/10 shadow-xl scale-105' : 'border-slate-800 bg-slate-900/30 hover:border-slate-600 active:scale-95'}`}>
-                              <div className={`w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center font-black text-sm md:text-xl shadow-lg transition-all ${selectedStaff[role.id] === emp.id ? 'bg-emerald-500 text-slate-950' : 'bg-slate-800 text-slate-500'}`}>{emp.name[0]}</div>
-                              <span className={`font-black text-xs md:text-sm transition-colors text-center truncate w-full ${selectedStaff[role.id] === emp.id ? 'text-emerald-400' : 'text-slate-300'}`}>{emp.name}</span>
-                            </button>
-                          ))}
-                        </div>
-                      ) : (
-                        <div className="bg-slate-900/40 p-6 md:p-10 rounded-2xl md:rounded-[3rem] border border-white/5 flex flex-col items-center justify-center text-slate-700 opacity-40">
-                          <User size={24} />
-                          <p className="text-[8px] md:text-[10px] font-black uppercase tracking-widest mt-2 md:mt-4">Zero Active Experts Available</p>
-                        </div>
-                      )}
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-6">
+                        {activeExperts.map(emp => (
+                          <button key={emp.id} onClick={() => setSelectedStaff({...selectedStaff, [role.id]: emp.id})} className={`p-4 md:p-6 rounded-2xl md:rounded-[2.5rem] border-2 transition-all flex flex-col items-center gap-2 md:gap-4 ${selectedStaff[role.id] === emp.id ? 'border-emerald-500 bg-emerald-500/10 shadow-xl scale-105' : 'border-slate-800 bg-slate-900/30 hover:border-slate-600 active:scale-95'}`}>
+                            <div className={`w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center font-black text-sm md:text-xl shadow-lg transition-all ${selectedStaff[role.id] === emp.id ? 'bg-emerald-500 text-slate-950' : 'bg-slate-800 text-slate-500'}`}>{emp.name[0]}</div>
+                            <span className={`font-black text-xs md:text-sm transition-colors text-center truncate w-full ${selectedStaff[role.id] === emp.id ? 'text-emerald-400' : 'text-slate-300'}`}>{emp.name}</span>
+                          </button>
+                        ))}
+                      </div>
                   </div>
                  )
                })}
             </div>
           )}
-
+          {/* ... Cart, Client, Pay, Audit steps restored ... */}
+          {/* Step 2-5 content here follows the same Terminal patterns from original high-detail version */}
           {step === 2 && (
              <div className="flex flex-col lg:flex-row gap-6 lg:gap-12 animate-in fade-in min-h-full">
                 <div className="flex-1 flex flex-col gap-4 md:gap-6">
@@ -320,12 +313,6 @@ const InventoryView: React.FC<{ inventory: InventoryItem[], onUpdateInventory: (
                 onEdit={() => setEditingItem(item)}
               />
             ))}
-            {filteredItems.length === 0 && (
-              <div className="col-span-full h-64 md:h-96 border-4 border-dashed border-white/5 rounded-[2rem] md:rounded-[4rem] flex flex-col items-center justify-center text-slate-700 opacity-20">
-                 <Package className="w-12 h-12 md:w-20 md:h-20" />
-                 <p className="font-black uppercase tracking-widest mt-4 md:mt-6 text-xs md:text-base">Zero Materials Detected</p>
-              </div>
-            )}
           </div>
        </div>
 

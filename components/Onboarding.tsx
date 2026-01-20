@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BusinessProfile, Sector, Branch, Transaction, Employee, Role, ServiceItem, InventoryItem, Unit } from '../types.ts';
-import { Coffee, Wrench, Scissors, Pill, ArrowRight, Building2 } from 'lucide-react';
+import { Coffee, Wrench, Scissors, Pill, ArrowRight, Building2, Smartphone } from 'lucide-react';
 
 interface OnboardingProps {
   onComplete: (data: any) => void;
@@ -143,7 +143,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
           { id: 's16', name: 'Head Massage', price: 55, category: 'Spa', image: 'https://plus.unsplash.com/premium_photo-1663090763496-310472d5ef93?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aGVhZCUyMG1hc3NhZ2V8ZW58MHx8MHx8fDA%3D' },
           { id: 's17', name: 'Threading(EyeBrow)', price: 55, category: 'Grooming', image: 'https://images.unsplash.com/photo-1519415387722-a1c3bbef716c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZXllYnJvdyUyMHRocmVhZGluZ3xlbnwwfHwwfHx8MA%3D%3D' },
           { id: 's18', name: 'Waxing(Arms)', price: 55, category: 'Grooming', image: 'https://plus.unsplash.com/premium_photo-1661541089335-518bd5aaade9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8d2F4aW5nJTIwYXJtc3xlbnwwfHwwfHx8MA%3D%3D' },
-          { id: 's19', name: 'Waxing(Legs)', price: 55, category: 'Grooming', image: 'https://plus.unsplash.com/premium_photo-1726804940914-2cd542e5d7e6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bGVnJTIwd2F4aW5nfGVufDB8fDB8fHww' },
+          { id: 's19', name: 'Waxing(Legs)', price: 55, category: 'Grooming', image: 'https://plus.unsplash.com/premium_photo-1726804940914-2cd542e5d7e6?w=600&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bGVnJTIwd2F4aW5nfGVufDB8fDB8fHww' },
           { id: 's20', name: 'Beard Trim', price: 55, category: 'Grooming', image: 'https://plus.unsplash.com/premium_photo-1661382028468-38612d62a254?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YmVhcmQlMjB0cmltfGVufDB8fDB8fHww' }
         ];
         mockInventory = [

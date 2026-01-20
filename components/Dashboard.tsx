@@ -58,7 +58,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ profile, transactions, emp
     const totalOrders = filteredTransactions.length;
     const avgOrderValue = totalOrders > 0 ? Math.round(totalRevenue / totalOrders) : 0;
 
-    // 1. Peak Hours (Volume vs Time) - Natural Number Y-axis enforced in Charts
     const timeLabels = filter === 'Day' 
       ? Array.from({ length: 24 }).map((_, i) => `${i.toString().padStart(2, '0')}:00`)
       : filter === 'Week' 
@@ -80,7 +79,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ profile, transactions, emp
 
     const peakHours = Object.entries(peakDataMap).map(([time, sales]) => ({ time, sales }));
 
-    // 2. Most Preferred Services
     const serviceCounts: Record<string, number> = {};
     filteredTransactions.forEach(tx => {
       tx.serviceIds.forEach(sid => {
@@ -93,7 +91,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ profile, transactions, emp
       .sort((a, b) => b.value - a.value)
       .slice(0, 8);
 
-    // 3. Hardworking Employee (Volume vs Specialists)
     const serviceProviderRoles = roles.filter(r => r.isServiceProvider).map(r => r.name);
     const empCounts: Record<string, number> = {};
     filteredTransactions.forEach(tx => {
@@ -109,7 +106,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ profile, transactions, emp
       .sort((a, b) => b.services - a.services)
       .slice(0, 5);
 
-    // 4. Preferred Protocol (Pie)
     const protocolCounts: Record<string, number> = { 'CASH': 0, 'UPI': 0, 'SPLIT': 0 };
     filteredTransactions.forEach(tx => {
       protocolCounts[tx.paymentMethod] = (protocolCounts[tx.paymentMethod] || 0) + 1;
@@ -136,16 +132,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ profile, transactions, emp
         </div>
         
         <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
-          {filter === 'Month' && (
-            <div className="flex gap-2">
-              <select value={selectedMonth} onChange={e => setSelectedMonth(parseInt(e.target.value))} className="bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-xs font-black uppercase text-indigo-400 outline-none">
-                {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((m, i) => <option key={i} value={i}>{m}</option>)}
-              </select>
-              <select value={selectedYear} onChange={e => setSelectedYear(parseInt(e.target.value))} className="bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-xs font-black uppercase text-indigo-400 outline-none">
-                {[2024, 2025, 2026].map(y => <option key={y} value={y}>{y}</option>)}
-              </select>
-            </div>
-          )}
           <div className="bg-slate-900/50 p-1.5 rounded-2xl border border-white/10 flex gap-1">
             {(['Day', 'Week', 'Month'] as TimeFilter[]).map(f => (
               <button key={f} onClick={() => setFilter(f)} className={`px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${filter === f ? 'bg-indigo-600 text-white shadow-xl' : 'text-slate-500 hover:text-white'}`}>

@@ -51,14 +51,16 @@ const App: React.FC = () => {
   };
 
   const handleExit = () => {
-    localStorage.removeItem('retailDesk_db');
-    setProfile(null);
-    setTransactions([]);
-    setEmployees([]);
-    setRoles([]);
-    setServices([]);
-    setInventory([]);
-    setActiveMain('SHOP');
+    if(confirm("Confirm: Terminate secure terminal session?")) {
+      localStorage.removeItem('retailDesk_db');
+      setProfile(null);
+      setTransactions([]);
+      setEmployees([]);
+      setRoles([]);
+      setServices([]);
+      setInventory([]);
+      setActiveMain('SHOP');
+    }
   };
 
   const addTransaction = (tx: Transaction) => {
