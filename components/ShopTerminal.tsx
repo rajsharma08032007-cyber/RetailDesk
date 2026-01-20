@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { BusinessProfile, Employee, Role, ServiceItem, Customer, PaymentMethod, Transaction, InventoryItem, Unit } from '../types';
+import { BusinessProfile, Employee, Role, ServiceItem, Customer, PaymentMethod, Transaction, InventoryItem, Unit } from '../types.ts';
 import { CheckCircle, Banknote, Smartphone, Split, Plus, Minus, ShoppingCart, Layers, ChevronLeft, ChevronRight, User, Trash2, Box, Edit2, Search, X, Image as ImageIcon, AlertTriangle, Package, History, Info } from 'lucide-react';
 
 export type ShopView = 'Services' | 'Inventory' | 'Catalog';
@@ -179,7 +179,6 @@ const ServicesWizard: React.FC<{ services: ServiceItem[], employees: Employee[],
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8">
                  {(['CASH', 'UPI', 'SPLIT'] as PaymentMethod[]).map(m => (
                    <button key={m} onClick={() => setPaymentMethod(m)} className={`p-8 md:p-16 rounded-2xl md:rounded-[4rem] border-2 flex flex-col items-center gap-4 md:gap-6 transition-all shadow-2xl ${paymentMethod === m ? 'border-emerald-500 bg-emerald-500/10 scale-105 shadow-emerald-500/10' : 'border-slate-800 text-slate-600 hover:border-slate-700 active:scale-95'}`}>
-                      {/* Fixed: Moved responsive size to className */}
                       {m === 'CASH' && <Banknote size={32} className={`md:size-12 ${paymentMethod === m ? 'text-emerald-400' : ''}`} />}
                       {m === 'UPI' && <Smartphone size={32} className={`md:size-12 ${paymentMethod === m ? 'text-emerald-400' : ''}`} />}
                       {m === 'SPLIT' && <Split size={32} className={`md:size-12 ${paymentMethod === m ? 'text-emerald-400' : ''}`} />}
@@ -252,8 +251,6 @@ const ServicesWizard: React.FC<{ services: ServiceItem[], employees: Employee[],
   );
 };
 
-// ... InventoryView and MaterialCard logic remains mostly similar, ensure they have responsive grid ...
-
 const InventoryView: React.FC<{ inventory: InventoryItem[], onUpdateInventory: (items: InventoryItem[]) => void }> = ({ inventory, onUpdateInventory }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [editingItem, setEditingItem] = useState<InventoryItem | null>(null);
@@ -317,15 +314,14 @@ const InventoryView: React.FC<{ inventory: InventoryItem[], onUpdateInventory: (
               <MaterialCard 
                 key={item.id} 
                 item={item} 
-                onDispatch={(amt) => handleUpdateLevel(item.id, -amt)}
-                onRestock={(amt) => handleUpdateLevel(item.id, amt)}
-                onWaste={(amt) => handleUpdateLevel(item.id, -amt, true)}
+                onDispatch={(amt: number) => handleUpdateLevel(item.id, -amt)}
+                onRestock={(amt: number) => handleUpdateLevel(item.id, amt)}
+                onWaste={(amt: number) => handleUpdateLevel(item.id, -amt, true)}
                 onEdit={() => setEditingItem(item)}
               />
             ))}
             {filteredItems.length === 0 && (
               <div className="col-span-full h-64 md:h-96 border-4 border-dashed border-white/5 rounded-[2rem] md:rounded-[4rem] flex flex-col items-center justify-center text-slate-700 opacity-20">
-                 {/* Fixed: Moved responsive size to className */}
                  <Package className="w-12 h-12 md:w-20 md:h-20" />
                  <p className="font-black uppercase tracking-widest mt-4 md:mt-6 text-xs md:text-base">Zero Materials Detected</p>
               </div>
@@ -398,8 +394,7 @@ const MaterialCard = ({ item, onDispatch, onRestock, onWaste, onEdit }: any) => 
              <span className="inline-block px-2 py-0.5 bg-slate-800 rounded-md text-[8px] font-black uppercase tracking-widest text-slate-500 mb-1.5">{item.category || 'General'}</span>
              <h3 className="text-white font-black text-sm md:text-xl tracking-tight leading-tight truncate pr-2">{item.name}</h3>
           </div>
-          {/* Fixed: Moved responsive size to className */}
-          <button onClick={onEdit} className="p-2 md:p-3 bg-slate-950 rounded-xl md:rounded-2xl text-slate-600 hover:text-white transition-all border border-white/5"><Edit2 size={12} className="md:size-4" /></button>
+          <button onClick={onEdit} className="p-2 md:p-3 bg-slate-950 rounded-xl md:rounded-2xl text-slate-600 hover:text-white transition-all border border-white/5"><Edit2 className="size-4 md:size-5" /></button>
        </div>
 
        <div className="grid grid-cols-2 gap-2 md:gap-3 shrink-0">
@@ -483,8 +478,7 @@ const CatalogView: React.FC<{ services: ServiceItem[], onUpdateServices: (items:
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-8 pb-10">
             {services.map(s => (
               <div key={s.id} onClick={() => setEditingService(s)} className="bg-slate-900 border border-white/5 rounded-[1.5rem] md:rounded-[3rem] overflow-hidden group hover:border-indigo-500 transition-all shadow-xl cursor-pointer relative active:scale-95">
-                {/* Fixed: Moved responsive size to className */}
-                <div className="absolute top-2 right-2 md:top-4 md:right-4 bg-slate-900/80 p-1.5 md:p-2 rounded-lg md:rounded-xl text-white opacity-0 group-hover:opacity-100 transition-opacity z-10 shadow-lg"><Edit2 size={12} className="md:size-4" /></div>
+                <div className="absolute top-2 right-2 md:top-4 md:right-4 bg-slate-900/80 p-1.5 md:p-2 rounded-lg md:rounded-xl text-white opacity-0 group-hover:opacity-100 transition-opacity z-10 shadow-lg"><Edit2 className="size-4 md:size-5" /></div>
                 <div className="h-28 md:h-44 overflow-hidden relative border-b border-white/5 bg-slate-800">
                   <img src={s.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100" />
                 </div>
@@ -503,8 +497,7 @@ const CatalogView: React.FC<{ services: ServiceItem[], onUpdateServices: (items:
              <div className="bg-slate-900 border border-slate-700 w-full max-w-lg rounded-2xl md:rounded-[3rem] p-6 md:p-10 shadow-3xl overflow-hidden">
                 <div className="flex justify-between items-center mb-6 md:mb-8">
                    <h3 className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter">{isAdding ? 'New Record' : 'Edit Record'}</h3>
-                   {/* Fixed: Moved responsive size to className */}
-                   <button onClick={() => { setEditingService(null); setIsAdding(false); }} className="p-2 md:p-3 bg-slate-800 rounded-xl md:rounded-2xl text-slate-500 hover:text-white transition-colors"><X size={20} className="md:size-6" /></button>
+                   <button onClick={() => { setEditingService(null); setIsAdding(false); }} className="p-2 md:p-3 bg-slate-800 rounded-xl md:rounded-2xl text-slate-500 hover:text-white transition-colors"><X className="size-6" /></button>
                 </div>
                 
                 <div className="space-y-4 md:space-y-6">
@@ -513,13 +506,11 @@ const CatalogView: React.FC<{ services: ServiceItem[], onUpdateServices: (items:
                       <div className="space-y-1.5 md:space-y-2"><label className="text-[8px] md:text-[10px] font-black text-slate-500 uppercase block ml-4">Category</label><input id="sCat" defaultValue={editingService?.category} className="w-full bg-slate-950 border border-slate-800 rounded-xl md:rounded-2xl p-4 text-white text-sm md:text-base font-bold outline-none" placeholder="e.g. Grooming" /></div>
                       <div className="space-y-1.5 md:space-y-2"><label className="text-[8px] md:text-[10px] font-black text-slate-500 uppercase block ml-4">Price (₹)</label><input id="sPrice" type="number" defaultValue={editingService?.price} className="w-full bg-slate-950 border border-slate-800 rounded-xl md:rounded-2xl p-4 text-white text-sm md:text-base font-bold outline-none" placeholder="0" /></div>
                    </div>
-                   {/* Fixed: Moved responsive size to className */}
-                   <div className="space-y-1.5 md:space-y-2"><label className="text-[8px] md:text-[10px] font-black text-slate-500 uppercase block ml-4">Image Resource (URL)</label><div className="flex gap-2"><div className="bg-slate-950 border border-slate-800 p-3 md:p-4 rounded-xl md:rounded-2xl text-slate-600 shrink-0"><ImageIcon size={16} className="md:size-5" /></div><input id="sImg" defaultValue={editingService?.image} className="flex-1 bg-slate-950 border border-slate-800 rounded-xl md:rounded-2xl p-4 text-white text-[9px] md:text-xs font-mono outline-none" placeholder="https://..." /></div></div>
+                   <div className="space-y-1.5 md:space-y-2"><label className="text-[8px] md:text-[10px] font-black text-slate-500 uppercase block ml-4">Image Resource (URL)</label><div className="flex gap-2"><div className="bg-slate-950 border border-slate-800 p-3 md:p-4 rounded-xl md:rounded-2xl text-slate-600 shrink-0"><ImageIcon className="size-5" /></div><input id="sImg" defaultValue={editingService?.image} className="flex-1 bg-slate-950 border border-slate-800 rounded-xl md:rounded-2xl p-4 text-white text-[9px] md:text-xs font-mono outline-none" placeholder="https://..." /></div></div>
                 </div>
 
                 <div className="mt-8 md:mt-10 pt-6 md:pt-8 border-t border-slate-800 flex flex-col sm:flex-row gap-3">
-                   {/* Fixed: Moved responsive size to className */}
-                   {!isAdding && <button onClick={() => handleDelete(editingService!.id)} className="w-full sm:w-auto p-4 md:p-5 bg-slate-800 text-slate-500 rounded-xl md:rounded-[2rem] hover:text-rose-500 transition-all border border-white/5 active:scale-90"><Trash2 size={18} className="md:size-5" /></button>}
+                   {!isAdding && <button onClick={() => handleDelete(editingService!.id)} className="w-full sm:w-auto p-4 md:p-5 bg-slate-800 text-slate-500 rounded-xl md:rounded-[2rem] hover:text-rose-500 transition-all border border-white/5 active:scale-90"><Trash2 className="size-5" /></button>}
                    <button onClick={() => {
                       const name = (document.getElementById('sName') as HTMLInputElement).value;
                       const cat = (document.getElementById('sCat') as HTMLInputElement).value;

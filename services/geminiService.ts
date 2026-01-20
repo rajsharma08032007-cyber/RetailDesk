@@ -1,5 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
-import { BusinessProfile, KPIMetrics, DailySales } from "../types";
+import { BusinessProfile, KPIMetrics, DailySales } from "../types.ts";
 
 // Initialize the API client
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });

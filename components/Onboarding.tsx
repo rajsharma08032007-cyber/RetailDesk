@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BusinessProfile, Sector, Branch, Transaction, Employee, Role, ServiceItem, InventoryItem, Unit } from '../types';
+import { BusinessProfile, Sector, Branch, Transaction, Employee, Role, ServiceItem, InventoryItem, Unit } from '../types.ts';
 import { Coffee, Wrench, Scissors, Pill, ArrowRight, Building2 } from 'lucide-react';
 
 interface OnboardingProps {
@@ -130,13 +130,13 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
           { id: 's3', name: 'Kids Haircut', price: 75, category: 'Hair', image: 'https://plus.unsplash.com/premium_photo-1677098576199-971c398f5403?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
           { id: 's4', name: 'Hair Wash & Blow Dry', price: 75, category: 'Hair', image: 'https://images.pexels.com/photos/7447134/pexels-photo-7447134.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
           { id: 's5', name: 'Hair Spa', price: 75, category: 'Hair Care', image: 'https://images.pexels.com/photos/8834048/pexels-photo-8834048.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
-          { id: 's6', name: 'Global Hair Coloring', price: 55, category: 'Coloring', image: 'https://plus.unsplash.com/premium_photo-1661672325251-683e6f7dea00?q=80&w=1176&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+          { id: 's6', name: 'Global Hair Coloring', price: 55, category: 'Coloring', image: 'https://plus.unsplash.com/premium_photo-1661672325251-683e6f7dea00?q=80&w=1176&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
           { id: 's7', name: 'Root Touch Up', price: 55, category: 'Coloring', image: 'https://images.pexels.com/photos/4981476/pexels-photo-4981476.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
-          { id: 's8', name: 'Keratin Treatment', price: 55, category: 'Premium', image: 'https://plus.unsplash.com/premium_photo-1720363480581-7c9765c74627?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+          { id: 's8', name: 'Keratin Treatment', price: 55, category: 'Premium', image: 'https://plus.unsplash.com/premium_photo-1720363480581-7c9765c74627?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
           { id: 's9', name: 'Smoothening', price: 55, category: 'Premium', image: 'https://media.istockphoto.com/id/177429570/photo/high-quality-image-woman-with-smooth-hair.jpg?s=2048x2048&w=is&k=20&c=LYR0Cu3YBMMsNSmVuJQp9nYuYSGbZ09wGJd1WkNxzEU=' },
-          { id: 's10', name: 'Anti-Dandruff', price: 55, category: 'Treatment', image: 'https://plus.unsplash.com/premium_photo-1674841253522-893a6a0077c0?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-          { id: 's11', name: 'Tan Removal', price: 55, category: 'Treatment', image: 'https://images.unsplash.com/photo-1552693673-1bf958298935?q=80&w=1173&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-          { id: 's12', name: 'CleanUp', price: 55, category: 'Skin', image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+          { id: 's10', name: 'Anti-Dandruff', price: 55, category: 'Treatment', image: 'https://plus.unsplash.com/premium_photo-1674841253522-893a6a0077c0?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+          { id: 's11', name: 'Tan Removal', price: 55, category: 'Treatment', image: 'https://images.unsplash.com/photo-1552693673-1bf958298935?q=80&w=1173&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+          { id: 's12', name: 'CleanUp', price: 55, category: 'Skin', image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
           { id: 's13', name: 'Facial-Gold', price: 55, category: 'Skin', image: 'https://plus.unsplash.com/premium_photo-1664300415296-1e1e606e553a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bHV4dXJ5JTIwZmFjaWFsfGVufDB8fDB8fHww' },
           { id: 's14', name: 'Facial-Fruit', price: 55, category: 'Skin', image: 'https://media.istockphoto.com/id/1590247969/photo/beautiful-woman-enjoying-receiving-a-facial-treatment-at-the-spa.jpg?s=2048x2048&w=is&k=20&c=NmPUQ2X4XZvL8XG6HSInhV7yXn9frY6GBvdbSZpR3sA=' },
           { id: 's15', name: 'Full Body Massage', price: 55, category: 'Spa', image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Ym9keSUyMG1hc3NhZ2V8ZW58MHx8MHx8fDA%3D' },
