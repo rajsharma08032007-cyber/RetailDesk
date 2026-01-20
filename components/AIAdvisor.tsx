@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Sparkles, RefreshCw, AlertCircle } from 'lucide-react';
-import { generateBusinessInsights } from '../services/geminiService';
-import { BusinessProfile, KPIMetrics, DailySales } from '../types';
+import { generateBusinessInsights } from '../services/geminiService.ts';
+import { BusinessProfile, KPIMetrics, DailySales } from '../types.ts';
 import ReactMarkdown from 'react-markdown';
 
 interface AIAdvisorProps {

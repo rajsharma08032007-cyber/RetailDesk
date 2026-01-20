@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { BusinessProfile, Employee, Transaction, Role, ServiceItem, PaymentMethod } from '../types';
-import { Dashboard } from './Dashboard';
+import { BusinessProfile, Employee, Transaction, Role, ServiceItem, PaymentMethod } from '../types.ts';
+import { Dashboard } from './Dashboard.tsx';
 import { Lock, UserPlus, Briefcase, Trash2, X, Search, Calendar, Filter, FileText, User, Eye, Edit3, CheckCircle2, XCircle, MoreVertical, Smartphone, Clock, Award } from 'lucide-react';
-import { AIChatOverlay } from './AIChatOverlay';
+import { AIChatOverlay } from './AIChatOverlay.tsx';
 
 export type InsightView = 'Data Analyst' | 'Employment' | 'Transaction';
 

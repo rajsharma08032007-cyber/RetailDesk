@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Sparkles, Send, X, MessageSquare, Bot } from 'lucide-react';
-import { chatWithBusinessAI } from '../services/geminiService';
+import { chatWithBusinessAI } from '../services/geminiService.ts';
 import ReactMarkdown from 'react-markdown';
 
 interface AIChatOverlayProps {

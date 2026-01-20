@@ -1,12 +1,12 @@
 import React, { useMemo, useState } from 'react';
-import { BusinessProfile, Sector, Transaction, Employee, Role, ServiceItem } from '../types';
+import { BusinessProfile, Sector, Transaction, Employee, Role, ServiceItem } from '../types.ts';
 import { TrendingUp, UserCheck, Clock, Award, Activity, ShoppingBag, CreditCard } from 'lucide-react';
 import { 
   PeakHoursChart, 
   EmployeePerformanceChart, 
   PaymentMethodChart, 
   TopItemsChart 
-} from './Charts';
+} from './Charts.tsx';
 
 interface DashboardProps {
   profile: BusinessProfile;
