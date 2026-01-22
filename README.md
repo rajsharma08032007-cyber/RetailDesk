@@ -1,4 +1,4 @@
-# RetailDesk  
+# 🖥️ RetailDesk
 ### Automated AI Engine for Smart Retail Operations
 
 **RetailDesk** is an **AI-enabled automated chatbot & analytics platform** designed for **small retail businesses** to manage billing, services, inventory, and deep operational insights — all from a unified system.
