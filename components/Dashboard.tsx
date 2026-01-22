@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { BusinessProfile, Sector, Transaction, Employee, Role, ServiceItem } from '../types.ts';
-import { TrendingUp, UserCheck, Clock, Award, Activity, ShoppingBag, CreditCard } from 'lucide-react';
+import { TrendingUp, UserCheck, Clock, Award, Activity, ShoppingBag, CreditCard, Calendar, ChevronDown } from 'lucide-react';
 import { 
   PeakHoursChart, 
   EmployeePerformanceChart, 
@@ -18,6 +18,11 @@ interface DashboardProps {
 
 type TimeFilter = 'Day' | 'Week' | 'Month';
 
+const MONTHS = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+];
+
 export const Dashboard: React.FC<DashboardProps> = ({ profile, transactions, employees, roles, services }) => {
   const [filter, setFilter] = useState<TimeFilter>('Day');
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
@@ -26,6 +31,11 @@ export const Dashboard: React.FC<DashboardProps> = ({ profile, transactions, emp
   const getDaysInMonth = (month: number, year: number) => {
     return new Date(year, month + 1, 0).getDate();
   };
+
+  const years = useMemo(() => {
+    const currentYear = new Date().getFullYear();
+    return [currentYear, currentYear - 1, currentYear - 2];
+  }, []);
 
   const labels = useMemo(() => {
     switch(profile.sector) {
@@ -132,6 +142,31 @@ export const Dashboard: React.FC<DashboardProps> = ({ profile, transactions, emp
         </div>
         
         <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
+          {filter === 'Month' && (
+            <div className="bg-slate-900/50 p-2 rounded-2xl border border-white/10 flex gap-2 animate-in slide-in-from-right-2">
+              <div className="relative group flex items-center">
+                <Calendar size={14} className="absolute left-3 text-indigo-400 pointer-events-none" />
+                <select 
+                  value={selectedMonth} 
+                  onChange={(e) => setSelectedMonth(parseInt(e.target.value))}
+                  className="bg-slate-950 border border-white/5 rounded-xl py-2 pl-9 pr-8 text-[10px] font-black uppercase text-white outline-none focus:border-indigo-500 transition-all appearance-none cursor-pointer"
+                >
+                  {MONTHS.map((m, i) => <option key={m} value={i}>{m}</option>)}
+                </select>
+                <ChevronDown size={12} className="absolute right-3 text-slate-500 pointer-events-none" />
+              </div>
+              <div className="relative group flex items-center">
+                <select 
+                  value={selectedYear} 
+                  onChange={(e) => setSelectedYear(parseInt(e.target.value))}
+                  className="bg-slate-950 border border-white/5 rounded-xl py-2 pl-4 pr-8 text-[10px] font-black uppercase text-white outline-none focus:border-indigo-500 transition-all appearance-none cursor-pointer"
+                >
+                  {years.map(y => <option key={y} value={y}>{y}</option>)}
+                </select>
+                <ChevronDown size={12} className="absolute right-3 text-slate-500 pointer-events-none" />
+              </div>
+            </div>
+          )}
           <div className="bg-slate-900/50 p-1.5 rounded-2xl border border-white/10 flex gap-1">
             {(['Day', 'Week', 'Month'] as TimeFilter[]).map(f => (
               <button key={f} onClick={() => setFilter(f)} className={`px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${filter === f ? 'bg-indigo-600 text-white shadow-xl' : 'text-slate-500 hover:text-white'}`}>

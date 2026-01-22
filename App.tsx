@@ -25,13 +25,17 @@ const App: React.FC = () => {
   useEffect(() => {
     const saved = localStorage.getItem('retailDesk_db');
     if (saved) {
-      const db = JSON.parse(saved);
-      setProfile(db.profile);
-      setTransactions(db.transactions);
-      setEmployees(db.employees);
-      setRoles(db.roles);
-      setServices(db.services);
-      setInventory(db.inventory || []);
+      try {
+        const db = JSON.parse(saved);
+        setProfile(db.profile);
+        setTransactions(db.transactions || []);
+        setEmployees(db.employees || []);
+        setRoles(db.roles || []);
+        setServices(db.services || []);
+        setInventory(db.inventory || []);
+      } catch (e) {
+        console.error("Critical: Storage Registry Corrupted", e);
+      }
     }
     setLoading(false);
   }, []);
@@ -51,16 +55,18 @@ const App: React.FC = () => {
   };
 
   const handleExit = () => {
-    if(confirm("Confirm: Terminate secure terminal session?")) {
-      localStorage.removeItem('retailDesk_db');
-      setProfile(null);
-      setTransactions([]);
-      setEmployees([]);
-      setRoles([]);
-      setServices([]);
-      setInventory([]);
-      setActiveMain('SHOP');
-    }
+    // Protocol: Directly terminate session and return to System Automation (Onboarding)
+    localStorage.removeItem('retailDesk_db');
+    setProfile(null);
+    setTransactions([]);
+    setEmployees([]);
+    setRoles([]);
+    setServices([]);
+    setInventory([]);
+    setActiveMain('SHOP');
+    // Ensure view is completely reset
+    setActiveShopTab('Services');
+    setActiveInsightTab('Data Analyst');
   };
 
   const addTransaction = (tx: Transaction) => {
