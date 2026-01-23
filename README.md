@@ -1,116 +1,20 @@
-# 🖥️ RetailDesk  
-### Automated AI Engine for Smart Retail Operations
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+</div>
 
-**RetailDesk** is an **AI-enabled automated chatbot & analytics platform** designed for **small retail businesses** to manage billing, services, inventory, and deep operational insights — all from a unified system.
+# Run and deploy your AI Studio app
 
-It is built to help shop owners, managers, and staff **work faster, analyze smarter, and decide better**.
+This contains everything you need to run your app locally.
 
----
+View your app in AI Studio: https://ai.studio/apps/drive/13UK4apx76-Guk5xDQaDxBlrSoaHyvm9T
 
-## 🚀 Short Description
+## Run Locally
 
-**RetailDesk** is an automated AI-powered support and data analysis system that provides deep insights into **Customer, Employee, and Shop data** for small retail businesses such as:
+**Prerequisites:**  Node.js
 
-- 🛠 Auto Repair Workshops  
-- ☕ Cafe & Bakery  
-- 💇 Salon & Spa  
-- 💊 Medical & Pharmacy Stores  
 
----
-
-## 🧩 Core Architecture
-
-RetailDesk operates through **two main terminals**:
-
-### 1️⃣ Shop Terminal (Billing & Operations)
-Accessible to staff and service advisors.
-
-**Features**
-- Service billing & cart management  
-- Specialist assignment (mechanics, advisors, staff)  
-- Inventory usage & loss tracking  
-- Service catalog & pricing  
-- Real-time stock grid  
-- Fast checkout workflow  
-
-> Designed for **speed, accuracy, and daily operations**
-
----
-
-### 2️⃣ Insight Terminal (Analytics & Intelligence)
-🔒 **Password Protected**  
-Accessible only to **Managers & Owners**
-
-**Features**
-- Revenue analytics & transaction history  
-- Employee productivity insights  
-- Service demand trends  
-- Inventory consumption analytics  
-- AI-assisted operational insights  
-- Day / Week / Month performance view  
-
-> Built for **decision-making and business intelligence**
-
----
-
-## 🖥️ Platform Highlights
-
-- 🌙 Modern Dark UI with futuristic design  
-- 🤖 AI-enabled chatbot support system  
-- 📊 Real-time data analytics dashboards  
-- 🔐 Role-based access control  
-- ⚙️ Modular architecture (Services, Inventory, Catalog, Analytics)  
-- 📱 Responsive & scalable UI  
-
----
-
-## 📸 UI Preview
-
-> Sample screens from the RetailDesk web interface:
-
-- System Automation Setup  
-- Service Assignment Flow  
-- Billing & Cart Registry  
-- Inventory Stock Grid  
-- Service Catalog  
-- Analytics & Data Analyst Core  
-
-*(Refer to screenshots in the repository for full UI flow)*
-
----
-
-## 🏗️ Target Users
-
-- Small Retail Business Owners  
-- Workshop Managers  
-- Service Advisors  
-- Shop Staff  
-- Business Analysts  
-
----
-
-## 🧠 Vision
-
-RetailDesk aims to **bridge the gap between daily shop operations and intelligent business insights**, making advanced analytics and automation accessible even to **small-scale retail businesses**.
-
----
-
-## 📌 Status
-
-🛠 **Active Development / Prototype Stage**  
-Future updates will include:
-- AI recommendations
-- Customer behavior prediction
-- Voice & chatbot-based interaction
-- Multi-branch support
-
----
-
-## 📄 License
-
-This project is currently under **private / experimental development**.  
-Licensing details will be updated in future releases.
-
----
-
-### ✨ Built with passion for automation, analytics & intelligent retail systems.
+1. Install dependencies:
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
+   `npm run dev`

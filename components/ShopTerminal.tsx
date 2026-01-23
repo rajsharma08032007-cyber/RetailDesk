@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { BusinessProfile, Employee, Role, ServiceItem, Customer, PaymentMethod, Transaction, InventoryItem, Unit } from '../types.ts';
 import { CheckCircle, Banknote, Smartphone, Split, Plus, Minus, ShoppingCart, Layers, ChevronLeft, ChevronRight, User, Trash2, Box, Edit2, Search, X, Image as ImageIcon, AlertTriangle, Package, History, Clock } from 'lucide-react';
 
@@ -33,8 +33,22 @@ const ServicesWizard: React.FC<{ services: ServiceItem[], employees: Employee[],
   const [customer, setCustomer] = useState<Customer>({ name: '', phone: '' });
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('CASH');
   const [isManualItemOpen, setIsManualItemOpen] = useState(false);
+  
+  // Split Payment State
+  const [splitCash, setSplitCash] = useState(0);
 
   const totalAmount = useMemo(() => cart.reduce((sum, item) => sum + (item.price * item.qty), 0), [cart]);
+  
+  // Ensure split values are valid relative to current total
+  const validSplitCash = Math.min(Math.max(0, splitCash), totalAmount);
+  const validSplitUPI = totalAmount - validSplitCash;
+
+  // Initialize split when entering step 4 or changing total
+  useEffect(() => {
+    if (step === 4 && splitCash === 0 && totalAmount > 0) {
+      setSplitCash(Math.floor(totalAmount / 2));
+    }
+  }, [step, totalAmount]);
   
   const serviceRoles = roles.filter(r => r.isServiceProvider);
 
@@ -67,13 +81,21 @@ const ServicesWizard: React.FC<{ services: ServiceItem[], employees: Employee[],
   };
 
   const finalize = () => {
+    const finalSplitDetails = paymentMethod === 'SPLIT' 
+      ? { cash: validSplitCash, upi: validSplitUPI } 
+      : undefined;
+
     onComplete({
       id: `TX-${Date.now().toString().slice(-6)}`,
       employeeIds: Object.values(selectedStaff).filter(Boolean),
       serviceIds: cart.flatMap(i => Array(i.qty).fill(i.id)),
-      customer, paymentMethod, totalAmount, date: new Date().toISOString()
+      customer, 
+      paymentMethod, 
+      splitDetails: finalSplitDetails,
+      totalAmount, 
+      date: new Date().toISOString()
     });
-    setStep(1); setSelectedStaff({}); setCart([]); setCustomer({name:'', phone:''});
+    setStep(1); setSelectedStaff({}); setCart([]); setCustomer({name:'', phone:''}); setSplitCash(0);
     alert("Protocol Dispatched: Transaction Registered.");
   };
 
@@ -168,7 +190,7 @@ const ServicesWizard: React.FC<{ services: ServiceItem[], employees: Employee[],
           {step === 4 && (
             <div className="max-w-4xl mx-auto py-4 md:py-10 animate-in fade-in">
               <div className="text-center mb-8 md:mb-16"><h2 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter">Settlement Protocol</h2></div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 mb-10">
                  {(['CASH', 'UPI', 'SPLIT'] as PaymentMethod[]).map(m => (
                    <button key={m} onClick={() => setPaymentMethod(m)} className={`p-6 md:p-16 rounded-2xl md:rounded-[4rem] border-2 flex flex-col items-center gap-4 md:gap-6 transition-all shadow-2xl ${paymentMethod === m ? 'border-emerald-500 bg-emerald-500/10 scale-105 shadow-emerald-500/10' : 'border-slate-800 text-slate-600 hover:border-slate-700 active:scale-95'}`}>
                       {m === 'CASH' && <Banknote size={32} className={`md:size-12 ${paymentMethod === m ? 'text-emerald-400' : ''}`} />}
@@ -178,6 +200,65 @@ const ServicesWizard: React.FC<{ services: ServiceItem[], employees: Employee[],
                    </button>
                  ))}
               </div>
+
+              {paymentMethod === 'SPLIT' && (
+                <div className="bg-slate-900/50 p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] border border-dashed border-slate-700 animate-in slide-in-from-top-4 relative overflow-hidden">
+                   <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none"></div>
+                   <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-8 gap-4">
+                      <h3 className="text-sm font-black text-slate-400 uppercase tracking-widest flex items-center gap-2"><Split size={16} /> Split Configuration</h3>
+                      <div className="text-left md:text-right bg-slate-950/50 px-4 py-2 rounded-xl border border-white/5">
+                         <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Total Payable</p>
+                         <p className="text-xl md:text-2xl font-black text-white tracking-tighter">₹{totalAmount}</p>
+                      </div>
+                   </div>
+                   
+                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+                      <div className="space-y-2">
+                         <label className="text-[10px] font-black text-emerald-500 uppercase tracking-widest ml-3 block">Cash Portion</label>
+                         <div className="relative group">
+                            <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500 font-bold group-focus-within:text-emerald-500 transition-colors">₹</span>
+                            <input 
+                              type="number" 
+                              value={validSplitCash} 
+                              onChange={(e) => {
+                                 const val = parseFloat(e.target.value);
+                                 if (!isNaN(val)) setSplitCash(val);
+                                 else setSplitCash(0);
+                              }}
+                              className="w-full bg-slate-950 border-2 border-slate-800 rounded-2xl md:rounded-3xl py-4 md:py-5 pl-10 md:pl-12 pr-6 text-white font-black text-lg md:text-2xl outline-none focus:border-emerald-500 transition-all shadow-inner"
+                            />
+                         </div>
+                      </div>
+                      <div className="space-y-2">
+                         <label className="text-[10px] font-black text-indigo-400 uppercase tracking-widest ml-3 block">UPI Portion</label>
+                         <div className="relative group">
+                            <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500 font-bold group-focus-within:text-indigo-400 transition-colors">₹</span>
+                            <input 
+                              type="number" 
+                              value={validSplitUPI} 
+                              onChange={(e) => {
+                                 const val = parseFloat(e.target.value);
+                                 if (!isNaN(val)) setSplitCash(totalAmount - val);
+                                 else setSplitCash(totalAmount);
+                              }}
+                              className="w-full bg-slate-950 border-2 border-slate-800 rounded-2xl md:rounded-3xl py-4 md:py-5 pl-10 md:pl-12 pr-6 text-white font-black text-lg md:text-2xl outline-none focus:border-indigo-500 transition-all shadow-inner"
+                            />
+                         </div>
+                      </div>
+                   </div>
+
+                   <div className="mt-8 md:mt-10">
+                      <div className="h-3 md:h-4 bg-slate-800 rounded-full overflow-hidden flex shadow-inner">
+                         <div style={{ width: `${totalAmount > 0 ? (validSplitCash / totalAmount) * 100 : 0}%` }} className="bg-emerald-500 h-full transition-all duration-500 relative"><div className="absolute inset-0 bg-white/20 animate-pulse"></div></div>
+                         <div style={{ width: `${totalAmount > 0 ? (validSplitUPI / totalAmount) * 100 : 0}%` }} className="bg-indigo-500 h-full transition-all duration-500 relative"><div className="absolute inset-0 bg-black/10"></div></div>
+                      </div>
+                      <div className="flex justify-between mt-3 text-[8px] md:text-[10px] font-black uppercase tracking-widest text-slate-500">
+                         <span className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-emerald-500"></div> {totalAmount > 0 ? (validSplitCash / totalAmount * 100).toFixed(0) : 0}% Cash</span>
+                         <span className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-indigo-500"></div> {totalAmount > 0 ? (validSplitUPI / totalAmount * 100).toFixed(0) : 0}% UPI</span>
+                      </div>
+                   </div>
+                </div>
+              )}
             </div>
           )}
 
@@ -195,7 +276,17 @@ const ServicesWizard: React.FC<{ services: ServiceItem[], employees: Employee[],
                   <div className="space-y-6 md:space-y-8">
                      <div className="flex justify-between items-start border-b-2 md:border-b-4 border-slate-100 pb-6 md:pb-10">
                         <div className="min-w-0"><p className="text-[8px] md:text-[10px] font-black text-slate-400 uppercase mb-1">Billing Record</p><h4 className="text-xl md:text-3xl font-black text-slate-900 tracking-tight truncate">{customer.name || 'Anonymous Client'}</h4></div>
-                        <div className="text-right shrink-0 ml-4"><p className="text-[8px] md:text-[10px] font-black text-slate-400 uppercase mb-1">Protocol</p><span className="inline-block bg-slate-950 text-white px-3 py-1 md:px-4 md:py-1.5 rounded-lg md:rounded-xl text-[8px] md:text-[10px] font-black uppercase">{paymentMethod}</span></div>
+                        <div className="text-right shrink-0 ml-4">
+                           <p className="text-[8px] md:text-[10px] font-black text-slate-400 uppercase mb-1">Protocol</p>
+                           {paymentMethod === 'SPLIT' ? (
+                              <div className="flex flex-col items-end gap-1">
+                                 <span className="inline-block bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded text-[8px] font-black uppercase">Cash: ₹{validSplitCash}</span>
+                                 <span className="inline-block bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded text-[8px] font-black uppercase">UPI: ₹{validSplitUPI}</span>
+                              </div>
+                           ) : (
+                              <span className="inline-block bg-slate-950 text-white px-3 py-1 md:px-4 md:py-1.5 rounded-lg md:rounded-xl text-[8px] md:text-[10px] font-black uppercase">{paymentMethod}</span>
+                           )}
+                        </div>
                      </div>
                      <div className="space-y-3 md:space-y-4">
                         {cart.map((i, idx) => (
