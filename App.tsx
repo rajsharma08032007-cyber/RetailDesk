@@ -85,14 +85,14 @@ const App: React.FC = () => {
     saveToLocal({ profile, transactions, employees, roles, services: items, inventory });
   };
 
-  if (loading) return <div className="h-screen bg-slate-950 flex items-center justify-center text-emerald-500 font-black animate-pulse uppercase tracking-[0.5em]">System_Booting...</div>;
+  if (loading) return <div className="h-[100dvh] bg-slate-950 flex items-center justify-center text-emerald-500 font-black animate-pulse uppercase tracking-[0.5em]">System_Booting...</div>;
 
   if (!profile) {
     return <Onboarding onComplete={handleOnboardingComplete} />;
   }
 
   return (
-    <div className="h-screen bg-slate-950 flex flex-col overflow-hidden font-sans text-slate-200">
+    <div className="h-[100dvh] bg-slate-950 flex flex-col overflow-hidden font-sans text-slate-200 supports-[height:100dvh]:h-[100dvh]">
       <header className="bg-slate-900/40 backdrop-blur-xl border-b border-white/5 shrink-0 z-50">
         <div className="flex h-14 md:h-16 items-center px-4 md:px-8 justify-between">
           <div className="flex items-center gap-2 md:gap-10">

@@ -26,7 +26,9 @@ const tooltipStyle = {
 
 const getShortName = (name: string) => {
   if (!name) return '';
-  return name.split(/[\s._-]+/).filter(Boolean).map(word => word[0]).join('').toUpperCase().slice(0, 2);
+  // Use RegExp constructor to avoid potential syntax errors with slash literals in some environments
+  const words = name.split(new RegExp('[\\s._-]+')).filter(Boolean);
+  return words.map(word => word[0]).join('').toUpperCase().slice(0, 2);
 };
 
 export const PeakHoursChart: React.FC<{ data: { time: string; sales: number }[] }> = ({ data }) => {

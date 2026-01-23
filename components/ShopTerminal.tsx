@@ -95,7 +95,7 @@ const ServicesWizard: React.FC<{ services: ServiceItem[], employees: Employee[],
       </div>
 
       <div className="flex-1 overflow-y-auto p-4 md:p-12 custom-scrollbar">
-        <div className="max-w-6xl mx-auto h-full">
+        <div className="max-w-6xl mx-auto min-h-full">
           {step === 1 && (
             <div className="space-y-6 md:space-y-12 animate-in fade-in slide-in-from-bottom-4">
                <div className="text-center"><h2 className="text-xl md:text-3xl font-black text-white uppercase tracking-tighter">Assign Specialists</h2></div>
@@ -117,13 +117,12 @@ const ServicesWizard: React.FC<{ services: ServiceItem[], employees: Employee[],
                })}
             </div>
           )}
-          {/* ... Cart, Client, Pay, Audit steps restored ... */}
-          {/* Step 2-5 content here follows the same Terminal patterns from original high-detail version */}
+          
           {step === 2 && (
-             <div className="flex flex-col lg:flex-row gap-6 lg:gap-12 animate-in fade-in min-h-full">
+             <div className="flex flex-col lg:flex-row gap-6 lg:gap-12 animate-in fade-in min-h-full pb-20 lg:pb-0">
                 <div className="flex-1 flex flex-col gap-4 md:gap-6">
                    <button onClick={() => setIsManualItemOpen(true)} className="w-full py-3 md:py-4 border-2 border-dashed border-slate-700 rounded-xl md:rounded-[2rem] text-slate-500 font-black uppercase text-[10px] md:text-xs hover:border-emerald-500 hover:text-emerald-500 transition-all">+ Add Manual / Custom Item</button>
-                   <div className="flex-1 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-4 lg:gap-6 pr-0 md:pr-4 custom-scrollbar">
+                   <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-4 lg:gap-6">
                       {services.map(s => {
                          const count = cart.find(i => i.id === s.id)?.qty || 0;
                          return (
@@ -136,9 +135,9 @@ const ServicesWizard: React.FC<{ services: ServiceItem[], employees: Employee[],
                       })}
                    </div>
                 </div>
-                <div className="w-full lg:w-[380px] xl:w-[420px] bg-slate-900 border border-white/5 rounded-[2rem] md:rounded-[3rem] p-6 md:p-8 flex flex-col shadow-3xl lg:h-full">
+                <div className="w-full lg:w-[380px] xl:w-[420px] bg-slate-900 border border-white/5 rounded-[2rem] md:rounded-[3rem] p-6 md:p-8 flex flex-col shadow-3xl lg:sticky lg:top-0 lg:h-[calc(100vh-200px)]">
                    <h3 className="font-black text-white text-base md:text-xl mb-4 md:mb-8 flex items-center gap-2 md:gap-3"><ShoppingCart size={20} className="text-emerald-400" /> Cart Registry</h3>
-                   <div className="flex-1 overflow-y-auto space-y-2 md:space-y-4 pr-1 md:pr-2 custom-scrollbar min-h-[150px] lg:min-h-0">
+                   <div className="flex-1 overflow-y-auto space-y-2 md:space-y-4 pr-1 md:pr-2 custom-scrollbar min-h-[150px]">
                       {cart.length === 0 ? (
                         <div className="h-full flex flex-col items-center justify-center opacity-10 text-slate-500 py-10"><Layers size={48} /><p className="font-black uppercase tracking-widest mt-4 text-xs">Empty</p></div>
                       ) : cart.map((i, idx) => (
@@ -171,7 +170,7 @@ const ServicesWizard: React.FC<{ services: ServiceItem[], employees: Employee[],
               <div className="text-center mb-8 md:mb-16"><h2 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter">Settlement Protocol</h2></div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8">
                  {(['CASH', 'UPI', 'SPLIT'] as PaymentMethod[]).map(m => (
-                   <button key={m} onClick={() => setPaymentMethod(m)} className={`p-8 md:p-16 rounded-2xl md:rounded-[4rem] border-2 flex flex-col items-center gap-4 md:gap-6 transition-all shadow-2xl ${paymentMethod === m ? 'border-emerald-500 bg-emerald-500/10 scale-105 shadow-emerald-500/10' : 'border-slate-800 text-slate-600 hover:border-slate-700 active:scale-95'}`}>
+                   <button key={m} onClick={() => setPaymentMethod(m)} className={`p-6 md:p-16 rounded-2xl md:rounded-[4rem] border-2 flex flex-col items-center gap-4 md:gap-6 transition-all shadow-2xl ${paymentMethod === m ? 'border-emerald-500 bg-emerald-500/10 scale-105 shadow-emerald-500/10' : 'border-slate-800 text-slate-600 hover:border-slate-700 active:scale-95'}`}>
                       {m === 'CASH' && <Banknote size={32} className={`md:size-12 ${paymentMethod === m ? 'text-emerald-400' : ''}`} />}
                       {m === 'UPI' && <Smartphone size={32} className={`md:size-12 ${paymentMethod === m ? 'text-emerald-400' : ''}`} />}
                       {m === 'SPLIT' && <Split size={32} className={`md:size-12 ${paymentMethod === m ? 'text-emerald-400' : ''}`} />}

@@ -379,11 +379,12 @@ const TransactionView = ({ transactions, employees, services }: { transactions: 
              <table className="w-full text-left text-xs md:text-sm min-w-[700px] md:min-w-[900px]">
                 <thead className="bg-slate-950/80 text-slate-600 uppercase font-black sticky top-0 z-10 backdrop-blur-xl border-b border-white/5">
                    <tr>
-                     <th className="px-6 md:px-12 py-4 md:py-6">Customer</th>
-                     <th className="px-6 md:px-12 py-4 md:py-6">Audit ID</th>
+                     <th className="px-6 md:px-12 py-4 md:py-6">Customer Name</th>
+                     <th className="px-6 md:px-12 py-4 md:py-6">Transaction-ID</th>
                      <th className="px-6 md:px-12 py-4 md:py-6">Protocol</th>
-                     <th className="px-6 md:px-12 py-4 md:py-6">Settled</th>
-                     <th className="px-6 md:px-12 py-4 md:py-6 text-right">Timestamp</th>
+                     <th className="px-6 md:px-12 py-4 md:py-6">Amount</th>
+                     <th className="px-6 md:px-12 py-4 md:py-6 text-right">Date</th>
+                     <th className="px-6 md:px-12 py-4 md:py-6 text-right">Time</th>
                    </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/50">
@@ -404,8 +405,9 @@ const TransactionView = ({ transactions, employees, services }: { transactions: 
                         <td className="px-6 md:px-12 py-4 md:py-6 font-black text-xl md:text-2xl text-emerald-500 tracking-tighter">₹{tx.totalAmount}</td>
                         <td className="px-6 md:px-12 py-4 md:py-6 text-right text-slate-500 text-[8px] md:text-[10px] font-black uppercase tracking-widest leading-relaxed">
                           <div>{new Date(tx.date).toLocaleDateString()}</div>
-                          <div>{new Date(tx.date).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div>
                         </td>
+                        <td className="px-6 md:px-12 py-4 md:py-6 text-right text-slate-500 text-[8px] md:text-[10px] font-black uppercase tracking-widest leading-relaxed">
+                           <div>{new Date(tx.date).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div></td>
                      </tr>
                    ))}
                 </tbody>
@@ -443,7 +445,7 @@ const TransactionView = ({ transactions, employees, services }: { transactions: 
                         <div className="flex items-center gap-1.5 text-[10px] md:text-xs font-bold text-slate-600 mt-0.5"><Smartphone size={10} /> {selectedTx.customer.phone}</div>
                      </div>
                      <div className="sm:text-right border-t border-white/5 sm:border-0 pt-3 sm:pt-0">
-                        <div className="text-[7px] md:text-[9px] font-black uppercase text-slate-500 tracking-widest mb-1">Settlement</div>
+                        <div className="text-[7px] md:text-[9px] font-black uppercase text-slate-500 tracking-widest mb-1">Amount</div>
                         <div className="inline-block px-3 py-1 rounded-md bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 font-black text-[8px] md:text-[10px] uppercase tracking-widest">{selectedTx.paymentMethod}</div>
                      </div>
                   </div>

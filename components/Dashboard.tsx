@@ -185,22 +185,22 @@ export const Dashboard: React.FC<DashboardProps> = ({ profile, transactions, emp
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-slate-900/40 border border-white/5 rounded-[3rem] p-8 md:p-10 shadow-2xl flex flex-col min-h-[450px]">
+        <div className="bg-slate-900/40 border border-white/5 rounded-[3rem] p-8 md:p-10 shadow-2xl flex flex-col min-h-[350px] md:min-h-[450px]">
           <h3 className="text-sm font-black text-white uppercase tracking-widest mb-8 flex items-center gap-3"><Clock size={18} className="text-amber-400" /> {labels.peak} Volume</h3>
           <div className="flex-1"><PeakHoursChart data={analysis.peakHours} /></div>
         </div>
-        <div className="bg-slate-900/40 border border-white/5 rounded-[3rem] p-8 md:p-10 shadow-2xl flex flex-col min-h-[450px]">
+        <div className="bg-slate-900/40 border border-white/5 rounded-[3rem] p-8 md:p-10 shadow-2xl flex flex-col min-h-[350px] md:min-h-[450px]">
           <h3 className="text-sm font-black text-white uppercase tracking-widest mb-8 flex items-center gap-3"><ShoppingBag size={18} className="text-indigo-400" /> Most Preferred {labels.items}</h3>
           <div className="flex-1"><TopItemsChart data={analysis.preferredServices} /></div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 bg-slate-900/40 border border-white/5 rounded-[3rem] p-8 md:p-10 shadow-2xl flex flex-col min-h-[450px]">
+        <div className="lg:col-span-2 bg-slate-900/40 border border-white/5 rounded-[3rem] p-8 md:p-10 shadow-2xl flex flex-col min-h-[350px] md:min-h-[450px]">
           <h3 className="text-sm font-black text-white uppercase tracking-widest mb-8 flex items-center gap-3"><UserCheck size={18} className="text-emerald-400" /> Hardworking Expert Efficiency</h3>
           <div className="flex-1"><EmployeePerformanceChart data={analysis.hardworkingEmployees} /></div>
         </div>
-        <div className="bg-slate-900/40 border border-white/5 rounded-[3rem] p-8 md:p-10 shadow-2xl flex flex-col min-h-[450px]">
+        <div className="bg-slate-900/40 border border-white/5 rounded-[3rem] p-8 md:p-10 shadow-2xl flex flex-col min-h-[350px] md:min-h-[450px]">
           <h3 className="text-sm font-black text-white uppercase tracking-widest mb-8 flex items-center gap-3"><CreditCard size={18} className="text-purple-400" /> Preferred Protocol Mix</h3>
           <div className="flex-1"><PaymentMethodChart data={analysis.preferredProtocol} /></div>
         </div>

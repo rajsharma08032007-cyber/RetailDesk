@@ -250,7 +250,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 md:p-8">
+    <div className="min-h-[100dvh] bg-slate-950 flex items-center justify-center p-4 md:p-8">
       <div className="w-full max-w-2xl bg-slate-900 border border-white/5 rounded-[2rem] md:rounded-[4rem] shadow-3xl p-6 md:p-16 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
         
