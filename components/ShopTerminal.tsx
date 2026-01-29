@@ -488,7 +488,7 @@ const MaterialCard = ({ item, onDispatch, onRestock, onWaste, onEdit }: any) => 
 
        <div className="space-y-3 md:space-y-4 pt-1 shrink-0">
           <div className="flex items-center gap-2 md:gap-4 bg-slate-950 p-1 md:p-2 rounded-xl md:rounded-[2rem] border border-slate-800 transition-all shadow-inner w-full">
-             <button onClick={() => setAdjustmentValue(v => Math.max(0, v - 1))} className="w-10 h-10 md:w-12 md:h-12 bg-slate-900 rounded-full flex items-center justify-center text-slate-400 shrink-0 hover:text-white transition-colors">
+             <button onClick={() => setAdjustmentValue(v => Math.max(0, v - 1))} className="w-10 h-10 md:w-12 md:h-12 bg-slate-900 rounded-full flex items-center justify-center text-slate-400 shrink-0 hover:text-white transition-colors border border-white/5">
                <Minus size={16} />
              </button>
              <input 
@@ -497,7 +497,7 @@ const MaterialCard = ({ item, onDispatch, onRestock, onWaste, onEdit }: any) => 
               onChange={e => setAdjustmentValue(parseFloat(e.target.value) || 0)}
               className="flex-1 bg-transparent text-center text-base md:text-xl font-black text-white outline-none w-full [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
              />
-             <button onClick={() => setAdjustmentValue(v => v + 1)} className="w-10 h-10 md:w-12 md:h-12 bg-slate-900 rounded-full flex items-center justify-center text-slate-400 shrink-0 hover:text-white transition-colors">
+             <button onClick={() => setAdjustmentValue(v => v + 1)} className="w-10 h-10 md:w-12 md:h-12 bg-slate-900 rounded-full flex items-center justify-center text-slate-400 shrink-0 hover:text-white transition-colors border border-white/5">
                <Plus size={16} />
              </button>
           </div>
