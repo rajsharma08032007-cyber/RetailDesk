@@ -183,7 +183,7 @@ const EmploymentView = ({ employees, setEmployees, roles, setRoles, transactions
     <div className="p-4 md:p-12 h-full flex flex-col overflow-y-auto custom-scrollbar">
        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-12 shrink-0 gap-4">
           <div>
-            <h2 className="text-xl md:text-4xl font-black text-white tracking-tighter uppercase leading-none">Resource Core</h2>
+            <h2 className="text-xl md:text-4xl font-black text-white tracking-tighter uppercase leading-none">Employee Stats</h2>
             <p className="text-[8px] md:text-[10px] text-slate-600 font-black uppercase tracking-[0.4em] mt-2 md:mt-3">Staffing Hierarchy & Performance Ledger</p>
           </div>
           <div className="flex gap-2 md:gap-4 w-full md:w-auto">
@@ -289,7 +289,7 @@ const EmploymentView = ({ employees, setEmployees, roles, setRoles, transactions
                 <div className="absolute top-0 left-0 w-full h-2 bg-indigo-500"></div>
                 <h3 className="text-xl md:text-2xl font-black text-white mb-6 md:mb-10 uppercase tracking-tighter text-center">Staff Recruitment</h3>
                 <div className="space-y-4 md:space-y-6 mb-8 md:mb-10">
-                   <div className="space-y-1.5"><label className="text-[8px] md:text-[10px] font-black text-slate-600 uppercase tracking-widest ml-4 block">Legal Full Name</label><input id="hname" className="w-full bg-slate-950 border border-slate-800 rounded-xl md:rounded-[2rem] p-4 md:p-5 text-white text-sm md:text-base font-bold outline-none focus:border-indigo-500 placeholder:text-slate-800" placeholder="e.g. Sarah Miller" /></div>
+                   <div className="space-y-1.5"><label className="text-[8px] md:text-[10px] font-black text-slate-600 uppercase tracking-widest ml-4 block">Employee Name</label><input id="hname" className="w-full bg-slate-950 border border-slate-800 rounded-xl md:rounded-[2rem] p-4 md:p-5 text-white text-sm md:text-base font-bold outline-none focus:border-indigo-500 placeholder:text-slate-800" placeholder="e.g. Sarah Miller" /></div>
                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
                       <div className="space-y-1.5"><label className="text-[8px] md:text-[10px] font-black text-slate-600 uppercase tracking-widest ml-4 block">Designation</label><select id="hrole" className="w-full bg-slate-950 border border-slate-800 rounded-xl md:rounded-[2rem] p-4 md:p-5 text-white text-sm font-bold appearance-none outline-none">{roles.map((r:any)=><option key={r.id} value={r.name}>{r.name}</option>)}</select></div>
                       <div className="space-y-1.5"><label className="text-[8px] md:text-[10px] font-black text-slate-600 uppercase tracking-widest ml-4 block">Salary (₹)</label><input id="hsal" type="number" className="w-full bg-slate-950 border border-slate-800 rounded-xl md:rounded-[2rem] p-4 md:p-5 text-white font-black text-sm outline-none focus:border-indigo-500" placeholder="15000" /></div>
@@ -379,11 +379,12 @@ const TransactionView = ({ transactions, employees, services }: { transactions: 
              <table className="w-full text-left text-xs md:text-sm min-w-[700px] md:min-w-[900px]">
                 <thead className="bg-slate-950/80 text-slate-600 uppercase font-black sticky top-0 z-10 backdrop-blur-xl border-b border-white/5">
                    <tr>
-                     <th className="px-6 md:px-12 py-4 md:py-6">Customer</th>
-                     <th className="px-6 md:px-12 py-4 md:py-6">Audit ID</th>
+                     <th className="px-6 md:px-12 py-4 md:py-6">Customer Name</th>
+                     <th className="px-6 md:px-12 py-4 md:py-6">Transcation-ID</th>
                      <th className="px-6 md:px-12 py-4 md:py-6">Protocol</th>
-                     <th className="px-6 md:px-12 py-4 md:py-6">Settled</th>
-                     <th className="px-6 md:px-12 py-4 md:py-6 text-right">Timestamp</th>
+                     <th className="px-6 md:px-12 py-4 md:py-6">Amount</th>
+                     <th className="px-6 md:px-12 py-4 md:py-6 text-right">Date</th>
+                     <th className="px-6 md:px-12 py-4 md:py-6 text-right">Time</th>
                    </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/50">
@@ -404,6 +405,8 @@ const TransactionView = ({ transactions, employees, services }: { transactions: 
                         <td className="px-6 md:px-12 py-4 md:py-6 font-black text-xl md:text-2xl text-emerald-500 tracking-tighter">₹{tx.totalAmount}</td>
                         <td className="px-6 md:px-12 py-4 md:py-6 text-right text-slate-500 text-[8px] md:text-[10px] font-black uppercase tracking-widest leading-relaxed">
                           <div>{new Date(tx.date).toLocaleDateString()}</div>
+                        </td>
+                        <td className="px-6 md:px-12 py-4 md:py-6 text-right text-slate-500 text-[8px] md:text-[10px] font-black uppercase tracking-widest leading-relaxed">
                           <div>{new Date(tx.date).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div>
                         </td>
                      </tr>
@@ -438,18 +441,18 @@ const TransactionView = ({ transactions, employees, services }: { transactions: 
                   <div className="flex flex-col sm:flex-row sm:items-center gap-4 p-4 md:p-5 bg-slate-950 rounded-2xl border border-white/5">
                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-indigo-600 flex items-center justify-center text-white shrink-0"><User size={20} /></div>
                      <div className="flex-1 min-w-0">
-                        <div className="text-[7px] md:text-[9px] font-black uppercase text-slate-500 tracking-widest mb-0.5">Client Identity</div>
+                        <div className="text-[7px] md:text-[9px] font-black uppercase text-slate-500 tracking-widest mb-0.5">Client Info</div>
                         <div className="text-base md:text-xl font-black text-white truncate">{selectedTx.customer.name}</div>
                         <div className="flex items-center gap-1.5 text-[10px] md:text-xs font-bold text-slate-600 mt-0.5"><Smartphone size={10} /> {selectedTx.customer.phone}</div>
                      </div>
                      <div className="sm:text-right border-t border-white/5 sm:border-0 pt-3 sm:pt-0">
-                        <div className="text-[7px] md:text-[9px] font-black uppercase text-slate-500 tracking-widest mb-1">Settlement</div>
+                        <div className="text-[7px] md:text-[9px] font-black uppercase text-slate-500 tracking-widest mb-1">Protocol</div>
                         <div className="inline-block px-3 py-1 rounded-md bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 font-black text-[8px] md:text-[10px] uppercase tracking-widest">{selectedTx.paymentMethod}</div>
                      </div>
                   </div>
 
                   <div>
-                     <h4 className="text-[7px] md:text-[9px] font-black uppercase text-slate-600 tracking-[0.3em] mb-3 ml-2">Staff Allocation</h4>
+                     <h4 className="text-[7px] md:text-[9px] font-black uppercase text-slate-600 tracking-[0.3em] mb-3 ml-2">Service Provider</h4>
                      <div className="flex flex-wrap gap-2">
                         {selectedTx.employeeIds.map(eid => {
                            const emp = employees.find(e => e.id === eid);
@@ -467,7 +470,7 @@ const TransactionView = ({ transactions, employees, services }: { transactions: 
                   </div>
 
                   <div>
-                     <h4 className="text-[7px] md:text-[9px] font-black uppercase text-slate-600 tracking-[0.3em] mb-3 ml-2">Protocol Audit</h4>
+                     <h4 className="text-[7px] md:text-[9px] font-black uppercase text-slate-600 tracking-[0.3em] mb-3 ml-2">Services</h4>
                      <div className="bg-slate-950 rounded-2xl border border-white/5 overflow-hidden">
                         {selectedTx.serviceIds.map((sid, idx) => {
                            const srv = services.find(s => s.id === sid);
@@ -491,11 +494,10 @@ const TransactionView = ({ transactions, employees, services }: { transactions: 
                <div className="p-5 md:p-8 bg-slate-950 border-t border-slate-800 shrink-0">
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-3 sm:gap-0">
                      <div className="order-2 sm:order-1">
-                        <div className="text-[7px] md:text-[9px] font-black text-slate-700 uppercase tracking-widest mb-1">Protocol Registry</div>
                         <div className="text-[8px] md:text-[10px] font-bold text-slate-600 uppercase tracking-widest italic">Encrypted Ledger v.4.2</div>
                      </div>
                      <div className="sm:text-right order-1 sm:order-2">
-                        <div className="text-[8px] md:text-[10px] font-black uppercase text-slate-500 tracking-widest mb-0.5 md:mb-1">Settled Net Sum</div>
+                        <div className="text-[8px] md:text-[10px] font-black uppercase text-slate-500 tracking-widest mb-0.5 md:mb-1">Total Amount</div>
                         <div className="text-3xl md:text-5xl font-black text-emerald-500 tracking-tighter">₹{selectedTx.totalAmount}</div>
                      </div>
                   </div>
