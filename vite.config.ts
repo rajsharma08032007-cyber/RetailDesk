@@ -4,13 +4,11 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   define: {
-    // Explicitly shim process.env for client-side access to API_KEY
-    'process.env': {
-      API_KEY: JSON.stringify(process.env.API_KEY || "")
-    }
+    // Vite handles env variables differently; this ensures the SDK finds the key
+    'process.env.API_KEY': JSON.stringify(process.env.API_KEY)
   },
   build: {
-    outDir: 'dist',
-    sourcemap: false
+    target: 'esnext',
+    outDir: 'dist'
   }
 });

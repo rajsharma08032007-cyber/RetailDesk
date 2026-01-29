@@ -1,10 +1,10 @@
 {
   "name": "retail-desk",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "engines": {
-    "node": ">=20.0.0"
+    "node": "20.x"
   },
   "scripts": {
     "dev": "vite",
@@ -13,17 +13,17 @@
   },
   "dependencies": {
     "@google/genai": "^1.38.0",
-    "lucide-react": "^0.563.0",
+    "lucide-react": "^0.475.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-markdown": "^10.1.0",
-    "recharts": "^3.7.0"
+    "react-markdown": "^10.0.0",
+    "recharts": "^2.15.1"
   },
   "devDependencies": {
-    "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
     "@vitejs/plugin-react": "^4.3.4",
     "typescript": "^5.7.3",
-    "vite": "^6.1.1"
+    "vite": "^6.1.0"
   }
 }
